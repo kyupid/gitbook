@@ -12,7 +12,7 @@
 
 ## 코틀린 <a href="#kotlin" id="kotlin"></a>
 
-* [코틀린 인 액션](kotlin/undefined.md)
+* [\[인프런\] 자바 to 코틀린 입문](kotlin/to.md)
 
 ## Spring Cloud
 
