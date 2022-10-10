@@ -186,3 +186,76 @@ fun max(a: Int, b: Int) = if (a > b) a else b
 * 함수 파라미터에 기본값을 설정해줄수있다
 * 함수를 호출할때 특정파라미터를 지정해 넣을수도 있다
 * 가변인자에는 vararg 키워드를 사용하고 가변인자 함수를 배열을 넣어 호출하고 싶을땐 `*`를 붙인다
+
+
+
+### Lec09. 클래스를 다루는 방법
+
+* 코틀린에서는 필드를 만들면 getter와 필요에따라 setter가 자동으로 생긴다
+  * 때문에 이를 프로퍼티라고 부른다
+* 생성자는 아래처럼 주생성자와 부생성자로 나뉜다
+
+```kotlin
+fun main() {
+    Person()
+}
+
+class Person(
+    val name: String,
+    var age: Int
+) {
+    init {
+        if (age <= 0) {
+            throw IllegalAccessException("나이는 ${age}일 수 없습니다")
+        }
+        println("초기화 블록")
+    }
+
+    constructor(name: String) : this(name, 1) {
+        println("첫번쨰부생성자")
+    }
+
+    constructor() : this("hey") {
+        println("두번쨰")
+    }
+
+}
+```
+
+```
+> Task :PersonKt.main()
+초기화 블록
+첫번쨰부생성자
+두번쨰
+```
+
+* 하지만 코틀린은 이것보다 default parameter를 권장한다
+
+```kotlin
+class Person(
+    val name: String = "hey",
+    var age: Int = 3
+) {
+	// ...
+}
+```
+
+* getter,setter는 이미 선언되어져있다. 기능을 추가할때 custom getter를 추가할수있다
+
+```kotlin
+    fun isAdult(): Boolean {
+        return this.age >= 20
+    }
+
+    val isAdult: Boolean
+        get() = this.age >= 20
+
+
+    val isAdult: Boolean
+        get() {
+            this.age >= 20
+        }
+```
+
+* custom getter, custom setter에서 무한루프륵 막기 위해 field라는 키워드를 사용한다
+  * 이를 backing field라고 부른다
