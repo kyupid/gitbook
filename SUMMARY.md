@@ -8,6 +8,7 @@
 
 ## 자바
 
+* [Inbox](undefined/inbox.md)
 * [이펙티브 자바](undefined/undefined.md)
 
 ## 코틀린 <a href="#kotlin" id="kotlin"></a>
