@@ -19,6 +19,10 @@
 
 * [Inbox](spring-cloud/inbox.md)
 
+## build
+
+* [Maven](build/maven.md)
+
 ## whatap
 
 * [Inbox](whatap/inbox.md)
