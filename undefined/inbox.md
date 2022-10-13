@@ -31,3 +31,33 @@ public class Test {
 }
 ```
 
+### InputStream OutputStream
+
+* input: 외부에서 들어오는 리소스
+* output: 외부로 보낼 리소스&#x20;
+
+#### 파일 쓰고 읽을때 바이트배열에 정수를 넣는것의 의미
+
+
+
+```java
+        byte[] bytes = {'a', 'b', '7', 6, 3, 4, 3, 2, 1, 0};
+ 
+        File file = new File("write_test.txt");
+        OutputStream outputStream = Files.newOutputStream(file.toPath());
+
+        for (int b : bytes) {
+            outputStream.write(b);
+        }
+
+        //바이트를 한번에 넣을 수 있다.
+//        outputStream.write(bytes);
+
+        outputStream.close();
+```
+
+6,3,4 … 는 해당되는 숫자그대로 바이트로 들어가기때문에 읽을때 ACK 이런식으로 아스키코드표에나오는 코드표대로 나온다
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/64eed858-dded-4036-9281-ddc37e356a8c/Untitled.png)
+
+‘a’ 등은 따옴표로 해주면 그 문자에 상응하는 바이트코드가 들어가게 되서 출력할때 잘나오게된다
