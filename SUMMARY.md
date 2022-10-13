@@ -1,6 +1,6 @@
 # Table of contents
 
-* [index](README.md)
+* [main inbox](README.md)
 
 ## MySQL
 
@@ -22,7 +22,3 @@
 ## build
 
 * [Maven](build/maven.md)
-
-## whatap
-
-* [Inbox](whatap/inbox.md)
