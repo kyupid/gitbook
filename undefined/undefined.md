@@ -93,3 +93,160 @@ public enum Kyu {
 * 자신만의 객체 풀을 만들지마라
   * 디비커넥션은 생성비용이 워낙비싸니 그렇게하는게 좋지만 일반적으론 코드를 헷갈리게하고 메모리사용량을 늘리고 성능을 떨어뜨린다
 * 방어적 복사가 필요한 상황도 있으므로 무조건적으로 객체 생성을 피하는것은 바람직하지않다
+
+
+
+## 3장..
+
+
+
+### 아이템11
+
+```java
+package org.example;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        Map<PhoneNumber, String> map = new HashMap<>();
+        map.put(new PhoneNumber(10, 1234, 3456), "hey");
+
+        System.out.println(map);
+
+        // null이 나오는 이유는? -> 앞에서 put한거랑 지금 get하거랑 서로 다른 객체이기 때문
+        // 더 나아가서 HashMap은 해시코드가 서로 다른 엔트리끼리는 동치성 비교를 시도조차 안하도록 최적화 되어있다
+        // 그런데 둘다 논리적으로 같은 객체이다
+        // null이 아니라 의도하는 "hey" 가 나오게 하려면? -> hashCode 를 override해줘야한다
+        System.out.println(map.get(new PhoneNumber(10, 1234, 3456)));
+
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+        // 아래 a,b는 hashCode가 같음
+        String a = "Z@S.ME";
+        String b = "Z@RN.E";
+
+        System.out.println(a.hashCode());
+        System.out.println(b.hashCode());
+
+        HashMap<String, Integer> hasnMap2 = new HashMap<>();
+        hasnMap2.put(a, 30);
+        hasnMap2.put(b, 40);
+
+        System.out.println(a.equals(b)); // false
+        System.out.println(a.hashCode()); // -1656719047
+        System.out.println(b.hashCode()); // -1656719047
+        System.out.println(hasnMap2.size()); // 2
+        System.out.println(hasnMap2.get(a)); // 30
+        System.out.println(hasnMap2.get(b)); // 40
+
+        // 위 코드가 의미하는건
+        // 두개의 HashCode가 같게 나와도 HashMap이 잘 처리해서 다른 키로 구분해주고있음
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        /////////////////////////////////////////////////
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+        Person person1 = new Person("kim");
+        Person person2 = new Person("kim");
+
+        HashMap<Person, Integer> hashMap = new HashMap<>();
+        hashMap.put(person1, 10);
+        hashMap.put(person2, 20);
+
+        System.out.println(person1.equals(person2));
+        System.out.println(person1.hashCode());
+        System.out.println(person2.hashCode());
+        System.out.println(hashMap.size());
+        System.out.println(hashMap.get(person1));
+        System.out.println(hashMap.get(person2));
+
+        /////////////////////////////////////////////////
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+        PhoneNumber number1 = new PhoneNumber(10, 1234, 3456);
+        PhoneNumber number2 = new PhoneNumber(10, 1234, 3456);
+
+        HashMap<PhoneNumber, Integer> hashMap2 = new HashMap<>();
+        hashMap2.put(number1, 10);
+        hashMap2.put(number2, 20);
+
+        System.out.println(number1.equals(number2));
+        System.out.println(number1.hashCode());
+        System.out.println(number2.hashCode());
+        System.out.println(hashMap2.size());
+        System.out.println(hashMap2.get(new PhoneNumber(10, 1234, 3456)));
+        // 위에 두개는 hashCoder가
+//        1285044316
+//        1607460018
+        // HashMap 같은경우에 put,get 할때 hash값을 이용하므로 위에 두객체가 equals가 true가 나왔다고 해도
+        // get을 하면 null이 나오는 것이다, 이를 방지하기위해 논리적으로 두 객체가 같도록 equals를 재정의했으면 hashCode도 재정의해줘야한다
+    }
+}
+
+
+class Person {
+    String name;
+
+    Person(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Person anotherObj = (Person) obj;
+        return this.name.equals(anotherObj.name);
+    }
+}
+
+class PhoneNumber {
+    private int first;
+    private int second;
+    private int third;
+
+    public PhoneNumber(int first, int second, int third) {
+        this.first = first;
+        this.second = second;
+        this.third = third;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        PhoneNumber anotherObj = (PhoneNumber) o;
+        return this.first == anotherObj.first &&
+                this.second == anotherObj.second &&
+                this.third == anotherObj.third;
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        PhoneNumber that = (PhoneNumber) o;
+//        return first == that.first && second == that.second && third == that.third;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(first, second, third);
+//    }
+}
+```
