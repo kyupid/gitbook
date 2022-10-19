@@ -22,3 +22,7 @@
 ## build
 
 * [Maven](build/maven.md)
+
+## computer common
+
+* [Inbox](computer-common/inbox.md)
