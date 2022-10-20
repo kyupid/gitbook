@@ -19,3 +19,13 @@
   * cpu가 두개라면 두번째 이미지처럼 같은 시간동안에 task를 말그대로 동시에 실행할 수 있다
 
 <figure><img src="../.gitbook/assets/2022-10-19_18-15-06.png" alt=""><figcaption></figcaption></figure>
+
+### 쓰레드 베타제어 05
+
+돈을 입출금하는 로직이 있을 때 로직상으로 데이터를 체크하고 입출금하는 로직이 문제가 없지만 쓰레드가 concurrent로 처리되면 두개의 쓰레드가 우연히 조건문에 둘다 들어가서 조건에 부합하지 않는데도 로직을 실행할 가능성이 있다.
+
+<figure><img src="../.gitbook/assets/2022-10-20_14-53-58.png" alt=""><figcaption></figcaption></figure>
+
+이를 방지하려면 syncronized 키워드를 메소드 앞에 붙여서 방지할 수 있다. syncronized 를 붙이면 다른 쓰레드가 실행중인 동일한 인스터스의 메소드에 바로 접근하지 못하고 기다려야만 한다.
+
+다른 쓰레드가 접근할 수 없는 것을 락(Lock)이라고 한다. 락에 걸린 상태에서는 synchronized 메소드에 접근할 수 없고 release 될때까지 기다려야한다. release 되면 기다리고 있는 쓰레드들 중에서 하나만 락을 획득(acquire)할 수 있다. 락은 인스턴스마다 존재한다. 따라서 어떤 인스턴스의 synchronized 메소드를 실행할 수 없다고 해서 다른 인스턴스의 synchornized 메소드 또한 실행할 수 없는 것은 아니다.
