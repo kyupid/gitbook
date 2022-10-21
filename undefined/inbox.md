@@ -58,6 +58,6 @@ public class Test {
 
 6,3,4 … 는 해당되는 숫자그대로 바이트로 들어가기때문에 읽을때 ACK 이런식으로 아스키코드표에나오는 코드표대로 나온다
 
-![](../.gitbook/assets/image.png)
+![](<../.gitbook/assets/image (1).png>)
 
 ‘a’ 등은 따옴표로 해주면 그 문자에 상응하는 바이트코드가 들어가게 되서 출력할때 잘나오게된다
