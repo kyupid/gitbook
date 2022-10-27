@@ -1,5 +1,7 @@
 # Inbox
 
+### 배열 정렬
+
 배열을 정렬할떄 Arrays.sort에 Comparable를 구현한 클래스를 넣어주면된다. Collections.reverseOrder() 등 미리 구현한 걸 사용해도 되고, 직접 구현해도 된다 Comparator는 compare() 만 구현하면되도록 되어있기때문에 따라서 익명함수로 사용이가능하다 구현할땐 기준을 정해주면 된다 기준은 주어진 객체(T o) 보다 작으면 음수, 같으면 0, 크면 양수를 리턴한다
 
 ```java
@@ -61,3 +63,14 @@ public class Test {
 ![](<../.gitbook/assets/image (1).png>)
 
 ‘a’ 등은 따옴표로 해주면 그 문자에 상응하는 바이트코드가 들어가게 되서 출력할때 잘나오게된다
+
+
+
+### static method 호출 from instance
+
+<figure><img src="../.gitbook/assets/2022-10-27_18-35-26.png" alt=""><figcaption></figcaption></figure>
+
+`mt.sleep` 은 instance를 통해 sleep을 호출하는게 아니라 결국에 static method를 호출한다. 그래서 컴파일에러도 나지 않는 것이다.
+
+
+
